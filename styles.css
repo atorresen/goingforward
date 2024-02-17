@@ -1,0 +1,46 @@
+body {
+  background: #222;
+  color: #ccc;
+  font-family: "Major Mono Display", monospace;
+  margin: 0;
+}
+
+h2 {
+  color: #888;
+}
+
+h3 {
+  border: solid;
+  border-width: 2px;
+  border-color: #ccc;
+  color: #ccc;
+  font-size: 4rem;
+}
+
+a {
+  color: #555;
+  text-decoration: none;
+}
+
+a:hover, h3:hover {
+  border-color: olive;
+  color: olive;
+}
+
+p {
+  color: #aaa;
+  font-family: sans-serif;
+  margin: 100px auto;
+}
+
+.buttons {
+  margin: 100px auto;
+  text-align: center;
+}
+
+.screen {
+  margin: 0;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
