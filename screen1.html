@@ -10,8 +10,19 @@
 </head>
 
 <body>
-  <img class="screen" id="screen1" alt="screen 1">
-  <script>screenSequence(1);</script>
+  <img class="screen" id="screen1" src="images/loadingBar.gif" alt="screen 1">
+  <script>
+    setInterval(
+      function() {
+        var date = new Date();
+        var mills = date.getMilliseconds();
+        if (mills == 0) {
+          screenSequence(1);
+        }
+      },
+      1
+    );
+  </script>
 </body>
 
 </html>
