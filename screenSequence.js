@@ -1,13 +1,13 @@
 var totalDuration = 3; //sequence restarts every 3 minutes
 var screenNum = 0;
 
-const offColor = "000000";
+const off = "000000";
 
 var textString = "";
-var backgroundColor = offColor;
-var backgroundColorList = [backgroundColor];
-var textColor = offColor;
-var textColorList = [textColor];
+var backgroundColor = off;
+var backgroundColorList = ["#" + off];
+var textColor = off;
+var textColorList = ["#" + off];
 
 function setup() {
   var myCanvas = createCanvas(windowWidth, windowHeight);
@@ -58,8 +58,8 @@ function screenSequence(n) {
   var sec = date.getSeconds();
 
   //array of images intended to be displayed at current time for a given duration
-  // var imageArray = getImages(min % totalDuration, sec);
-  var imageInfo = getImages(0, sec % 22); //currently only hooked up for the first 22 seconds
+  // var imageArray = getText(min % totalDuration, sec);
+  var imageInfo = getText(0, sec % 52); //currently only hooked up this far
   var duration = imageInfo[3];
   var colorSpread = imageInfo[4];
 
@@ -82,7 +82,7 @@ function screenSequence(n) {
   textColorList = nearbyColors(textColor, colorSpread);
 
   //reset every second
-  setTimeout(getImages, duration, screenNum, sec);
+  setTimeout(getText, duration, screenNum, sec);
 };
 
 
@@ -96,41 +96,41 @@ const title = [
 ];
 const blank = [
   ["", "", "", "", ""],
-  [offColor, offColor, offColor, offColor, offColor],
-  [offColor],
+  [off, off, off, off, off],
+  [off],
   2,
   0
 ];
 const triptych = [
   ["", "nobody feels any pain", "every day is a new year", "the entrance is your only exit", ""],
-  [offColor, "ff7f50", "afeeee", "4b0082", offColor],
+  [off, "ff7f50", "afeeee", "4b0082", off],
   ["ffffff"],
   2,
   50
 ];
 const triptychPt1 = [
   ["", "nobody feels any pain", "", "", ""],
-  [offColor, "ff7f50", offColor, offColor, offColor],
+  [off, "ff7f50", off, off, off],
   ["ffffff"],
   2,
   -50
 ];
 const triptychPt2 = [
   ["", "", "every day is a new year", "", ""],
-  [offColor, offColor, "afeeee", offColor, offColor],
+  [off, off, "afeeee", off, off],
   ["ffffff"],
   2,
   -50
 ];
 const triptychPt3 = [
   ["", "", "", "the entrance is your only exit", ""],
-  [offColor, offColor, offColor, "4b0082", offColor],
+  [off, off, off, "4b0082", off],
   ["000000"],
   2
 ];
 const sorrow = [
   ["tread in sorrow", "", "", "", "drown in answers"],
-  ["000075", offColor, offColor, offColor, "008090"],
+  ["000075", off, off, off, "008090"],
   ["ffffff"],
   2,
   50
@@ -149,17 +149,36 @@ const onlyExitRow = [
   2,
   -50
 ];
+const armSlut = [
+  ["the strong arms to carry you away", "", "", "I am not a slut", ""],
+  ["cc0000", off, off, "ddff99", off],
+  ["0033cc", off, off, "ff66b3", off],
+  2,
+  -50
+];
 
 //choose image arrangement, colors, and duration based on the current time
-function getImages(m, s) {
+function getText(m, s) {
   var imageInfo;
   if (m === 0) {
     if (0 <= s && s <= 9) {
       imageInfo = title;
     } else if (10 <= s && s <= 12) {
-      imageInfo = sorrow;
+      imageInfo = blank;
     } else if (13 <= s && s <= 22) {
+      imageInfo = triptych;
+    } else if (23 <= s && s <= 27) {
+      imageInfo = triptychPt1;
+    } else if (28 <= s && s <= 31) {
+      imageInfo = triptychPt2;
+    } else if (32 <= s && s <= 35) {
+      imageInfo = triptychPt3;
+    } else if (36 <= s && s <= 39) {
       imageInfo = onlyExitRow;
+    } else if (40 <= s && s <= 42) {
+      imageInfo = blank;
+    } else if (43 <= s && s <= 52) {
+      imageInfo = sorrow;
     }
   } else if (m === 1) {
     //TODO
