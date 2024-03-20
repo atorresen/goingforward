@@ -12,18 +12,7 @@
 
 <body>
   <div class="screen" id="screen"></div>
-  <script>
-    setInterval(
-      function() {
-        var date = new Date();
-        var mills = date.getMilliseconds();
-        if (mills == 0) {
-          screenSequence(3);
-        }
-      },
-      1
-    );
-  </script>
+  <script>setScreenNum(3);</script>
 </body>
 
 </html>

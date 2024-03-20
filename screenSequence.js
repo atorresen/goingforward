@@ -1,6 +1,10 @@
 var totalDuration = 3; //sequence restarts every 3 minutes
 var screenNum = 0;
 
+function setScreenNum(n) {
+  screenNum = n;
+}
+
 const off = "000";
 
 var textString = "";
@@ -15,13 +19,20 @@ function setup() {
 };
 
 function draw() {
+  screenSequence(screenNum);
   frameRate(2.5);
   background(random(backgroundColorList));
   fill(random(textColorList));
   textFont("Menlo")
   textAlign(CENTER);
   textSize(windowWidth/20);
-  text(textString, windowWidth/2, windowHeight/2)
+  text(textString, windowWidth/2, windowHeight/2);
+
+  // for debugging:
+  // var date = new Date();
+  // var sec = date.getSeconds();
+  // fill("red");
+  // text(sec, 50, 50);
 };
 
 
@@ -55,20 +66,16 @@ function nearbyColors(start, spread) {
 
 
 function screenSequence(n) {
-  screenNum = n;
-
   //current time
   var date = new Date();
   var min = date.getMinutes();
   var sec = date.getSeconds();
 
-  //array of images intended to be displayed at current time for a given duration
+  //get text and colors intended to be displayed at the current time
   // var imageArray = getText(min % totalDuration, sec);
   var imageInfo = getText(0, sec % 52); //currently only hooked up this far
-  var duration = imageInfo[3];
-  var colorSpread = imageInfo[4];
+  var colorSpread = imageInfo[3];
 
-  //design screen n
   textString = imageInfo[0][n - 1];
 
   if (imageInfo[1].length == 1) {
@@ -85,84 +92,72 @@ function screenSequence(n) {
 
   backgroundColorList = nearbyColors(backgroundColor, colorSpread);
   textColorList = nearbyColors(textColor, colorSpread);
-
-  //reset every second
-  setTimeout(getText, duration, screenNum, sec);
 };
 
 
-//image arrangements with durations, in the form [[textStrings], [backgroundColors], [textColors], duration]
+//image arrangements in the form [[textStrings], [backgroundColors], [textColors], colorVariation]
 const title = [
   ["coming back", "to where you started", "is not the same", "as never", "having left"],
   ["62cccc", "62cc8c", "62adcc", "9de3e5", "62cccc"],
   ["ffffff"],
-  2,
   -50
 ];
 const blank = [
   ["", "", "", "", ""],
   [off, off, off, off, off],
   [off],
-  2,
   0
 ];
 const triptych = [
   ["", "nobody feels any pain", "every day is a new year", "the entrance is your only exit", ""],
   [off, "ff7f50", "afeeee", "4b0082", off],
   ["ffffff"],
-  2,
   50
 ];
 const triptychPt1 = [
   ["", "nobody feels any pain", "", "", ""],
   [off, "ff7f50", off, off, off],
   ["ffffff"],
-  2,
   -50
 ];
 const triptychPt2 = [
   ["", "", "every day is a new year", "", ""],
   [off, off, "afeeee", off, off],
   ["ffffff"],
-  2,
   -50
 ];
 const triptychPt3 = [
   ["", "", "", "the entrance is your only exit", ""],
   [off, off, off, "4b0082", off],
   ["000000"],
-  2
+  -50
 ];
 const sorrow = [
   ["tread in sorrow", "", "", "", "drown in answers"],
   ["000075", off, off, off, "008090"],
   ["ffffff"],
-  2,
   50
 ];
 const authority = [
   ["", "we silence ourselves", "", "nobody is in charge", "we silence ourselves"],
   ["ff7f50"],
   ["ffffff"],
-  2,
   -20
 ];
 const onlyExitRow = [
   ["the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit"],
   ["4b0082"],
   ["000000"],
-  2,
   -50
 ];
 const armSlut = [
   ["the strong arms to carry you away", "", "", "I am not a slut", ""],
   ["cc0000", off, off, "ddff99", off],
   ["0033cc", off, off, "ff66b3", off],
-  2,
   -50
 ];
 
-//choose image arrangement, colors, and duration based on the current time
+//choose image arrangement and colors based on the current time
 function getText(m, s) {
   var imageInfo;
   if (m === 0) {
