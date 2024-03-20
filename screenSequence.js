@@ -1,7 +1,7 @@
 var totalDuration = 3; //sequence restarts every 3 minutes
 var screenNum = 0;
 
-const off = "000000";
+const off = "000";
 
 var textString = "";
 var backgroundColor = off;
@@ -20,30 +20,35 @@ function draw() {
   fill(random(textColorList));
   textFont("Menlo")
   textAlign(CENTER);
-  textSize(38);
+  textSize(windowWidth/20);
   text(textString, windowWidth/2, windowHeight/2)
 };
 
-function nearbyColors(start, spread) {
-  // code taken from https://natclark.com/tutorials/javascript-lighten-darken-hex-color/
-  var dec = parseInt(start, 16);
-  let r = (dec >> 16) + spread;
-  r > 255 && (r = 255);
-  r < 0 && (r = 0);
-  let g = (dec & 0x0000ff) + spread;
-  g > 255 && (g = 255);
-  g < 0 && (g = 0);
-  let b = ((dec >> 8) & 0x00ff) + spread;
-  b > 255 && (b = 255);
-  b < 0 && (b = 0);
-  var end = (g | (b << 8) | (r << 16)).toString(16);
 
-  var numColors = Math.abs(spread);
-  var colorList = [];
-  for (var i = 1; i <= numColors; i++) {
-    colorList.push(
-      lerpColor(color("#" + start), color("#" + end), i / numColors)
-    )
+function nearbyColors(start, spread) {
+  var dec = parseInt(start, 16);
+  if (dec == 0) {
+    colorList = ["#000"];
+  } else {
+    // code taken from https://natclark.com/tutorials/javascript-lighten-darken-hex-color/
+    let r = (dec >> 16) + spread;
+    r > 255 && (r = 255);
+    r < 0 && (r = 0);
+    let g = (dec & 0x0000ff) + spread;
+    g > 255 && (g = 255);
+    g < 0 && (g = 0);
+    let b = ((dec >> 8) & 0x00ff) + spread;
+    b > 255 && (b = 255);
+    b < 0 && (b = 0);
+    var end = (g | (b << 8) | (r << 16)).toString(16);
+
+    var numColors = Math.abs(spread);
+    var colorList = [];
+    for (var i = 1; i <= numColors; i++) {
+      colorList.push(
+        lerpColor(color("#" + start), color("#" + end), i / numColors)
+      )
+    };
   };
   return colorList;
 }
