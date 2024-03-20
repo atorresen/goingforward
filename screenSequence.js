@@ -5,13 +5,13 @@ function setScreenNum(n) {
   screenNum = n;
 }
 
-const off = "000";
+const off = "#000";
 
 var textString = "";
 var backgroundColor = off;
-var backgroundColorList = ["#" + off];
+var backgroundColorList = [off];
 var textColor = off;
-var textColorList = ["#" + off];
+var textColorList = [off];
 
 function setup() {
   var myCanvas = createCanvas(windowWidth, windowHeight);
@@ -37,7 +37,7 @@ function draw() {
 
 
 function nearbyColors(start, spread) {
-  var dec = parseInt(start, 16);
+  var dec = parseInt(start.substring(1), 16);
   if (dec == 0) {
     colorList = ["#000"];
   } else {
@@ -57,7 +57,7 @@ function nearbyColors(start, spread) {
     var colorList = [];
     for (var i = 1; i <= numColors; i++) {
       colorList.push(
-        lerpColor(color("#" + start), color("#" + end), i / numColors)
+        lerpColor(color(start), color("#" + end), i / numColors)
       )
     };
   };
@@ -74,87 +74,84 @@ function screenSequence(n) {
   //get text and colors intended to be displayed at the current time
   // var imageArray = getText(min % totalDuration, sec);
   var imageInfo = getText(0, sec % 52); //currently only hooked up this far
-  var colorSpread = imageInfo[3];
+  var colorSpread;
 
   textString = imageInfo[0][n - 1];
-
-  if (imageInfo[1].length == 1) {
-    backgroundColor = imageInfo[1][0];
-  } else {
-    backgroundColor = imageInfo[1][n - 1]
-  };
-
-  if (imageInfo[2].length == 1) {
-    textColor = imageInfo[2][0]
-  } else {
-    textColor = imageInfo[2][n - 1]
-  };
+  backgroundColor = imageInfo[1][Math.min(n, imageInfo[1].length) - 1];
+  textColor = imageInfo[2][Math.min(n, imageInfo[2].length) - 1];
+  colorSpread = imageInfo[3][Math.min(n, imageInfo[3].length) - 1];
 
   backgroundColorList = nearbyColors(backgroundColor, colorSpread);
   textColorList = nearbyColors(textColor, colorSpread);
 };
 
 
-//image arrangements in the form [[textStrings], [backgroundColors], [textColors], colorVariation]
-const title = [
-  ["coming back", "to where you started", "is not the same", "as never", "having left"],
-  ["62cccc", "62cc8c", "62adcc", "9de3e5", "62cccc"],
-  ["ffffff"],
-  -50
-];
+//image arrangements in the form [[textStrings], [backgroundColors], [textColors], [colorSpreads]]
 const blank = [
   ["", "", "", "", ""],
   [off, off, off, off, off],
   [off],
-  0
+  [0]
+];
+const title = [
+  ["coming back", "to where you started", "is not the same", "as never", "having left"],
+  ["#62cccc", "#e0ffe0", "#62adcc", "#9de3e5", "#62cccc"],
+  ["#ffffff"],
+  [-50]
 ];
 const triptych = [
   ["", "nobody feels any pain", "every day is a new year", "the entrance is your only exit", ""],
-  [off, "ff7f50", "afeeee", "4b0082", off],
-  ["ffffff"],
-  50
+  [off, "#e37861", "#96c4e8", "#5e3385", off],
+  [off, "#ccbbbb", "#ffffff", "#111111", off],
+  [0, -20, 50, -20, 0]
 ];
 const triptychPt1 = [
   ["", "nobody feels any pain", "", "", ""],
-  [off, "ff7f50", off, off, off],
-  ["ffffff"],
-  -50
+  [off, "#e37861", off, off, off],
+  ["#ccbbbb"],
+  [-50]
 ];
 const triptychPt2 = [
   ["", "", "every day is a new year", "", ""],
-  [off, off, "afeeee", off, off],
-  ["ffffff"],
-  -50
+  [off, off, "#96c4e8", off, off],
+  ["#ffffff"],
+  [50]
 ];
 const triptychPt3 = [
   ["", "", "", "the entrance is your only exit", ""],
-  [off, off, off, "4b0082", off],
-  ["000000"],
-  -50
+  [off, off, off, "#5e3385", off],
+  ["#111111"],
+  [-20]
 ];
 const sorrow = [
   ["tread in sorrow", "", "", "", "drown in answers"],
-  ["000075", off, off, off, "008090"],
-  ["ffffff"],
-  50
+  ["#2233ff", off, off, off, "#008090"],
+  ["#008090", off, off, off, "#2233ff"],
+  [50]
 ];
 const authority = [
-  ["", "we silence ourselves", "", "nobody is in charge", "we silence ourselves"],
-  ["ff7f50"],
-  ["ffffff"],
-  -20
+  ["", "we silence ourselves", "", "no one is in charge", "we silence ourselves"],
+  [off, "#a6C7c4", off, "#12345", "#a6C7c4"],
+  [off, "#fff8e7", off, "#54321", "#fff8e7"],
+  [-20]
 ];
 const onlyExitRow = [
   ["the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit"],
-  ["4b0082"],
-  ["000000"],
-  -50
+  ["#5e3385"],
+  ["#111111"],
+  [-20]
 ];
 const armSlut = [
   ["the strong arms to carry you away", "", "", "I am not a slut", ""],
-  ["cc0000", off, off, "ddff99", off],
-  ["0033cc", off, off, "ff66b3", off],
-  -50
+  ["#cc0000", off, off, "#9ed680", off],
+  ["#33369c", off, off, "#ff66b3", off],
+  [-50]
+];
+const silence = [
+  ["", "", "", "we silence ourselves", ""],
+  [off, off, off, "#ffff00", off],
+  [off, off, off, "#888800", off],
+  [50]
 ];
 
 //choose image arrangement and colors based on the current time
