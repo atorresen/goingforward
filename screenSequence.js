@@ -1,3 +1,5 @@
+const debugQ = false;
+
 var totalDuration = 3; //sequence restarts every 3 minutes
 var screenNum = 0;
 
@@ -28,11 +30,12 @@ function draw() {
   textSize(windowWidth/20);
   text(textString, windowWidth/2, windowHeight/2);
 
-  // for debugging:
-  // var date = new Date();
-  // var sec = date.getSeconds();
-  // fill("red");
-  // text(sec, 50, 50);
+  if (debugQ) {
+    var date = new Date();
+    var sec = date.getSeconds();
+    fill("red");
+    text(sec, 50, 50);
+  }
 };
 
 
@@ -72,8 +75,8 @@ function screenSequence(n) {
   var sec = date.getSeconds();
 
   //get text and colors intended to be displayed at the current time
-  // var imageArray = getText(min % totalDuration, sec);
-  var imageInfo = getText(0, sec % 52); //currently only hooked up this far
+  // var imageInfo = getText(min % totalDuration, sec);
+  var imageInfo = getText(0, sec); //currently only hooked up this far
   var colorSpread;
 
   textString = imageInfo[0][n - 1];
@@ -153,6 +156,18 @@ const silence = [
   [off, off, off, "#888800", off],
   [50]
 ];
+const dontwait = [
+  ["", "don't wait", "to be", "good", ""],
+  [off, "#cc6677", "#66cc77", "#7766cc", off],
+  [off, "#66cc77", "#7766cc", "#cc6677", off],
+  [35]
+];
+const getting = [
+  ["there's nothing to get", "", "", "it's all in", "the getting"],
+  ["#889999", off, off, "#ccbbbb", "#ccbbbb"],
+  ["#995599", off, off, "#7777aa", "#7777aa"],
+  [50]
+];
 
 //choose image arrangement and colors based on the current time
 function getText(m, s) {
@@ -167,15 +182,19 @@ function getText(m, s) {
     } else if (23 <= s && s <= 27) {
       imageInfo = triptychPt1;
     } else if (28 <= s && s <= 31) {
-      imageInfo = triptychPt2;
+      imageInfo = dontwait;
     } else if (32 <= s && s <= 35) {
-      imageInfo = triptychPt3;
+      imageInfo = triptychPt2;
     } else if (36 <= s && s <= 39) {
       imageInfo = onlyExitRow;
     } else if (40 <= s && s <= 42) {
       imageInfo = blank;
     } else if (43 <= s && s <= 52) {
-      imageInfo = sorrow;
+      imageInfo = getting;
+    } else if (53 <= s && s <= 54) {
+      imageInfo = blank;
+    } else if (55 <= s && s <= 59) {
+      imageInfo = silence;
     }
   } else if (m === 1) {
     //TODO
