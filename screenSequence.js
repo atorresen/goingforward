@@ -1,4 +1,4 @@
-const debugQ = false;
+const debugCounterQ = false;
 
 var totalDuration = 3; //sequence restarts every 3 minutes
 var screenNum = 0;
@@ -18,25 +18,42 @@ var textColorList = [off];
 function setup() {
   var myCanvas = createCanvas(windowWidth, windowHeight);
   myCanvas.parent("screen");
-};
+}
 
 function draw() {
-  screenSequence(screenNum);
-  frameRate(2.5);
-  background(random(backgroundColorList));
-  fill(random(textColorList));
-  textFont("Menlo")
-  textAlign(CENTER);
-  textSize(windowWidth/20);
-  text(textString, windowWidth/2, windowHeight/2);
+  if (screenNum == 0) {
+    // debugging code (test page that shows all 5 screens)
+    for (var i = 1; i <= 5; i++) {
+      screenSequence(i);
+      frameRate(2.5);
+      fill(random(backgroundColorList));
+      rect((i - 1) * windowWidth/5, 0, windowWidth/5, windowHeight/5);
+      fill(random(textColorList));
+      textFont("Menlo")
+      textAlign(CENTER);
+      textSize(windowWidth/20/5);
+      text(textString, (2 * i - 1) * windowWidth/10, windowHeight/10);
+    };
+  } else {
+    // actual code
+    screenSequence(screenNum);
+    frameRate(2.5);
+    background(random(backgroundColorList));
+    fill(random(textColorList));
+    textFont("Menlo")
+    textAlign(CENTER);
+    textSize(windowWidth/20);
+    text(textString, windowWidth/2, windowHeight/2);
+  };
 
-  if (debugQ) {
+  // debugging code (second counter)
+  if (debugCounterQ) {
     var date = new Date();
     var sec = date.getSeconds();
     fill("red");
     text(sec, 50, 50);
-  }
-};
+  };
+}
 
 
 function nearbyColors(start, spread) {
@@ -86,7 +103,7 @@ function screenSequence(n) {
 
   backgroundColorList = nearbyColors(backgroundColor, colorSpread);
   textColorList = nearbyColors(textColor, colorSpread);
-};
+}
 
 
 //image arrangements in the form [[textStrings], [backgroundColors], [textColors], [colorSpreads]]
@@ -202,4 +219,4 @@ function getText(m, s) {
     //TODO
   };
   return imageInfo;
-};
+}
