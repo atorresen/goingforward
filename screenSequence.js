@@ -27,12 +27,13 @@ function draw() {
       screenSequence(i);
       frameRate(2.5);
       fill(random(backgroundColorList));
-      rect((i - 1) * windowWidth/5, 0, windowWidth/5, windowHeight/5);
+      rect((i - 1) * windowWidth/5, windowHeight/5, windowWidth/5, windowHeight/5);
       fill(random(textColorList));
       textFont("Menlo")
       textAlign(CENTER);
       textSize(windowWidth/20/5);
-      text(textString, (2 * i - 1) * windowWidth/10, windowHeight/10);
+      text(textString, (2 * i - 1) * windowWidth/10, 3 * windowHeight/10);
+      text(textString, (2 * i - 1) * windowWidth/10, 6 * windowHeight/10);
     };
   } else {
     // actual code
@@ -115,15 +116,15 @@ const blank = [
 ];
 const title = [
   ["coming back", "to where you started", "is not the same", "as never", "having left"],
-  ["#62cccc", "#e0ffe0", "#62adcc", "#9de3e5", "#62cccc"],
+  ["#e0ffe0", "#e6ffff", "#f0e0f0", "#def0ff", "#e0ffe0"],
   ["#ffffff"],
   [-50]
 ];
 const triptych = [
   ["", "nobody feels any pain", "every day is a new year", "the entrance is your only exit", ""],
-  [off, "#e37861", "#96c4e8", "#5e3385", off],
-  [off, "#ccbbbb", "#ffffff", "#111111", off],
-  [0, -20, 50, -20, 0]
+  [off, "#e37861", "#96c4e8", "#1a0042", off],
+  [off, "#ccbbbb", "#ffffff", "#333333", off],
+  [0, -20, 50, 20, 0]
 ];
 const triptychPt1 = [
   ["", "nobody feels any pain", "", "", ""],
@@ -139,14 +140,14 @@ const triptychPt2 = [
 ];
 const triptychPt3 = [
   ["", "", "", "the entrance is your only exit", ""],
-  [off, off, off, "#5e3385", off],
-  ["#111111"],
-  [-20]
+  [off, off, off, "#1a0042", off],
+  ["#333333"],
+  [20]
 ];
 const sorrow = [
   ["tread in sorrow", "", "", "", "drown in answers"],
-  ["#2233ff", off, off, off, "#008090"],
-  ["#008090", off, off, off, "#2233ff"],
+  ["#2233aa", off, off, off, "#008090"],
+  ["#008090", off, off, off, "#2233aa"],
   [50]
 ];
 const authority = [
@@ -157,12 +158,12 @@ const authority = [
 ];
 const onlyExitRow = [
   ["the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit"],
-  ["#5e3385"],
-  ["#111111"],
-  [-20]
+  ["#1a0042"],
+  ["#333333"],
+  [20]
 ];
 const armSlut = [
-  ["the strong arms to carry you away", "", "", "I am not a slut", ""],
+  ["strong arms to carry you away", "", "", "I am not a slut", ""],
   ["#cc0000", off, off, "#9ed680", off],
   ["#33369c", off, off, "#ff66b3", off],
   [-50]
@@ -175,15 +176,15 @@ const silence = [
 ];
 const dontwait = [
   ["", "don't wait", "to be", "good", ""],
-  [off, "#cc6677", "#66cc77", "#7766cc", off],
-  [off, "#66cc77", "#7766cc", "#cc6677", off],
+  [off, "#abcdef", "#671233", "#7766cc", off],
+  [off, "#de76fa", "#abcdef", "#e37861", off],
   [35]
 ];
 const getting = [
   ["there's nothing to get", "", "", "it's all in", "the getting"],
-  ["#889999", off, off, "#ccbbbb", "#ccbbbb"],
-  ["#995599", off, off, "#7777aa", "#7777aa"],
-  [50]
+  ["#889999", off, off, "#995599", "#995599"],
+  ["#995599", off, off, "#ccbbbb", "#ccbbbb"],
+  [-50]
 ];
 
 //choose image arrangement and colors based on the current time
@@ -201,7 +202,7 @@ function getText(m, s) {
     } else if (28 <= s && s <= 31) {
       imageInfo = dontwait;
     } else if (32 <= s && s <= 35) {
-      imageInfo = triptychPt2;
+      imageInfo = armSlut;
     } else if (36 <= s && s <= 39) {
       imageInfo = onlyExitRow;
     } else if (40 <= s && s <= 42) {
