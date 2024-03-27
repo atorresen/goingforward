@@ -33,6 +33,10 @@ p {
   margin: 100px auto;
 }
 
+input {
+  margin: 2% 0;
+}
+
 .buttons {
   margin: 100px auto;
   text-align: center;
@@ -47,4 +51,22 @@ p {
 
 .screenPage {
   overflow: hidden;
+}
+
+.nonscreen {
+  margin: 5% 15%
+}
+
+#submit {
+  border: solid;
+  border-width: 2px;
+  font-size: 1.1rem;
+  border-color: olive;
+  color: olive;
+  font-family: "Major Mono Display", monospace;
+}
+
+#submit:hover {
+  border-color: #ccc;
+  cursor: pointer;
 }

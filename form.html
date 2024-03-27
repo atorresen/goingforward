@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="images/icon.ico">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+
+  <title>submit</title>
+</head>
+
+<body class="nonscreen">
+
+  <h4>submit a phrase:</h4>
+
+  <form id="newPhrase" class="" action="#" method="post">
+    <label for="screen1">screen 1:</label><br>
+    <input type="text" id="screen1" name="screen1"><br>
+    <label for="screen2">screen 2:</label><br>
+    <input type="text" id="screen2" name="screen2"><br>
+    <label for="screen3">screen 3:</label><br>
+    <input type="text" id="screen3" name="screen3"><br>
+    <label for="screen4">screen 4:</label><br>
+    <input type="text" id="screen4" name="screen4"><br>
+    <label for="screen5">screen 5:</label><br>
+    <input type="text" id="screen5" name="screen5"><br>
+    <input type="submit" id="submit" value="submit">
+  </form>
+
+  <div><a href="index.html"><h4>< home</h4></a></div>
+</body>
+
+<script type="text/javascript">
+  const form = document.getElementById("newPhrase");
+  const submitButton = document.getElementById("submit");
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyV2_GT70vsSt9ndkCDTmHsOsTNEiAWSBsakfKrGoNCUusl6wNCvRuPVWBGHmyddDSSWw/exec';
+
+  form.addEventListener("submit",
+    e => {
+      submitButton.disabled = true;
+      e.preventDefault();
+      let requestBody = new FormData(form);
+      fetch(scriptURL, {
+          method: 'POST',
+          body: requestBody
+        })
+        .then(response => {
+          alert('Submission successful', response)
+          submitButton.disabled = false
+        })
+        .catch(error => {
+          alert('Error - try again or contact atorre03@risd.edu', error.message)
+          submitButton.disabled = false
+        });
+      form.reset();
+    }
+  )
+</script>
+
+</html>
