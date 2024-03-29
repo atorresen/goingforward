@@ -1,4 +1,4 @@
-const debugQ = true;
+const debugQ = false;
 
 var screenNum = 0;
 
@@ -66,7 +66,7 @@ function screenSequence(n) {
   //TODO: update based on dates of exhibition
          if (day == 21) {transparency = "11";}
     else if (day == 22) {transparency = "33";}
-    else if (day == 29) {transparency = "55";}
+    else if (day == 23) {transparency = "55";}
     else if (day == 24) {transparency = "77";}
     else if (day == 25) {transparency = "99";}
     else if (day == 26) {transparency = "bb";}
