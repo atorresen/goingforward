@@ -58,6 +58,7 @@ input {
 }
 
 #submit {
+  background-color: #222;
   border: solid;
   border-width: 2px;
   font-size: 1.1rem;
@@ -68,5 +69,6 @@ input {
 
 #submit:hover {
   border-color: #ccc;
+  color: #ccc;
   cursor: pointer;
 }
