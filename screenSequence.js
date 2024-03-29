@@ -1,19 +1,22 @@
-const debugCounterQ = false;
+const debugQ = true;
 
-var totalDuration = 3; //sequence restarts every 3 minutes
 var screenNum = 0;
+
+var frameRateN = (1/60)/60;
 
 function setScreenNum(n) {
   screenNum = n;
+  debugQ == (debugQ || screenNum == 0);
+  if (debugQ) {frameRateN = 0.5}
 }
 
 const off = "#000";
 
+var transparency = "11";
+
 var textString = "";
 var backgroundColor = off;
-var backgroundColorList = [off];
-var textColor = off;
-var textColorList = [off];
+var textColor = "#fff";
 
 function setup() {
   var myCanvas = createCanvas(windowWidth, windowHeight);
@@ -21,203 +24,144 @@ function setup() {
 }
 
 function draw() {
-  if (screenNum == 0) {
+    if (screenNum == 0) {
     // debugging code (test page that shows all 5 screens)
     for (var i = 1; i <= 5; i++) {
       screenSequence(i);
-      frameRate(2.5);
-      fill(random(backgroundColorList));
+      frameRate(frameRateN);
+      fill(off);
       rect((i - 1) * windowWidth/5, windowHeight/5, windowWidth/5, windowHeight/5);
-      fill(random(textColorList));
+      fill(backgroundColor);
+      rect((i - 1) * windowWidth/5, windowHeight/5, windowWidth/5, windowHeight/5);
+      fill(textColor);
       textFont("Menlo")
       textAlign(CENTER);
       textSize(windowWidth/20/5);
       text(textString, (2 * i - 1) * windowWidth/10, 3 * windowHeight/10);
-      text(textString, (2 * i - 1) * windowWidth/10, 6 * windowHeight/10);
     };
   } else {
     // actual code
     screenSequence(screenNum);
-    frameRate(2.5);
-    background(random(backgroundColorList));
-    fill(random(textColorList));
+    frameRate(frameRateN);
+    background(off);
+    fill(backgroundColor);
+    rect(0, 0, windowWidth, windowHeight);
+    fill(textColor);
     textFont("Menlo")
     textAlign(CENTER);
     textSize(windowWidth/20);
     text(textString, windowWidth/2, windowHeight/2);
   };
-
-  // debugging code (second counter)
-  if (debugCounterQ) {
-    var date = new Date();
-    var sec = date.getSeconds();
-    fill("red");
-    text(sec, 50, 50);
-  };
 }
-
-
-function nearbyColors(start, spread) {
-  var dec = parseInt(start.substring(1), 16);
-  if (dec == 0) {
-    colorList = ["#000"];
-  } else {
-    // code taken from https://natclark.com/tutorials/javascript-lighten-darken-hex-color/
-    let r = (dec >> 16) + spread;
-    r > 255 && (r = 255);
-    r < 0 && (r = 0);
-    let g = (dec & 0x0000ff) + spread;
-    g > 255 && (g = 255);
-    g < 0 && (g = 0);
-    let b = ((dec >> 8) & 0x00ff) + spread;
-    b > 255 && (b = 255);
-    b < 0 && (b = 0);
-    var end = (g | (b << 8) | (r << 16)).toString(16);
-
-    var numColors = Math.abs(spread);
-    var colorList = [];
-    for (var i = 1; i <= numColors; i++) {
-      colorList.push(
-        lerpColor(color(start), color("#" + end), i / numColors)
-      )
-    };
-  };
-  return colorList;
-}
-
 
 function screenSequence(n) {
   //current time
   var date = new Date();
+  var day = date.getDate();
+  var hour = date.getHours();
   var min = date.getMinutes();
   var sec = date.getSeconds();
 
+  //update transparency each day
+  //TODO: update based on dates of exhibition
+         if (day == 21) {transparency = "11";}
+    else if (day == 22) {transparency = "33";}
+    else if (day == 29) {transparency = "55";}
+    else if (day == 24) {transparency = "77";}
+    else if (day == 25) {transparency = "99";}
+    else if (day == 26) {transparency = "bb";}
+    else if (day == 27) {transparency = "dd";}
+
   //get text and colors intended to be displayed at the current time
-  // var imageInfo = getText(min % totalDuration, sec);
-  var imageInfo = getText(0, sec); //currently only hooked up this far
-  var colorSpread;
+  if (debugQ) {
+    var imageInfo = getText(min % 24, sec);
+  } else {
+    var imageInfo = getText(hour, min);
+  };
 
   textString = imageInfo[0][n - 1];
-  backgroundColor = imageInfo[1][Math.min(n, imageInfo[1].length) - 1];
-  textColor = imageInfo[2][Math.min(n, imageInfo[2].length) - 1];
-  colorSpread = imageInfo[3][Math.min(n, imageInfo[3].length) - 1];
-
-  backgroundColorList = nearbyColors(backgroundColor, colorSpread);
-  textColorList = nearbyColors(textColor, colorSpread);
+  backgroundColor = imageInfo[1] + transparency;
 }
 
-
-//image arrangements in the form [[textStrings], [backgroundColors], [textColors], [colorSpreads]]
-const blank = [
-  ["", "", "", "", ""],
-  [off, off, off, off, off],
-  [off],
-  [0]
-];
+//image arrangements in the form [[textStrings], backgroundColor]
+const blank = [["", "", "", "", ""], off];
 const title = [
   ["coming back", "to where you started", "is not the same", "as never", "having left"],
-  ["#e0ffe0", "#e6ffff", "#f0e0f0", "#def0ff", "#e0ffe0"],
-  ["#ffffff"],
-  [-50]
+  "#def0ff"
 ];
-const triptych = [
-  ["", "nobody feels any pain", "every day is a new year", "the entrance is your only exit", ""],
-  [off, "#e37861", "#96c4e8", "#1a0042", off],
-  [off, "#ccbbbb", "#ffffff", "#333333", off],
-  [0, -20, 50, 20, 0]
+const nobodyFeels = [
+  ["nobody", "feels", "", "any", "pain"],
+  "#e37861"
 ];
-const triptychPt1 = [
-  ["", "nobody feels any pain", "", "", ""],
-  [off, "#e37861", off, off, off],
-  ["#ccbbbb"],
-  [-50]
-];
-const triptychPt2 = [
-  ["", "", "every day is a new year", "", ""],
-  [off, off, "#96c4e8", off, off],
-  ["#ffffff"],
-  [50]
-];
-const triptychPt3 = [
-  ["", "", "", "the entrance is your only exit", ""],
-  [off, off, off, "#1a0042", off],
-  ["#333333"],
-  [20]
+const everyDay = [
+  ["every", "day", "is a", "new", "year"],
+  "#96c4e8"
 ];
 const sorrow = [
-  ["tread in sorrow", "", "", "", "drown in answers"],
-  ["#2233aa", off, off, off, "#008090"],
-  ["#008090", off, off, off, "#2233aa"],
-  [50]
+  ["tread", "in sorrow", "drown", "in answers"],
+  "#2233aa"
 ];
-const authority = [
-  ["", "we silence ourselves", "", "no one is in charge", "we silence ourselves"],
-  [off, "#a6C7c4", off, "#12345", "#a6C7c4"],
-  [off, "#fff8e7", off, "#54321", "#fff8e7"],
-  [-20]
+const onlyExit = [
+  ["the entrance", "is", "your", "only", "exit"],
+  "#1a0042"
 ];
-const onlyExitRow = [
-  ["the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit", "the entrance is your only exit"],
-  ["#1a0042"],
-  ["#333333"],
-  [20]
-];
-const armSlut = [
-  ["strong arms to carry you away", "", "", "I am not a slut", ""],
-  ["#cc0000", off, off, "#9ed680", off],
-  ["#33369c", off, off, "#ff66b3", off],
-  [-50]
+const audrey = [
+  ["I", "am", "not", "a", "slut"],
+  "#9ed680"
 ];
 const silence = [
-  ["", "", "", "we silence ourselves", ""],
-  [off, off, off, "#ffff00", off],
-  [off, off, off, "#888800", off],
-  [50]
+  ["", "we", "silence", "ourselves", ""],
+  "#ffff00"
 ];
-const dontwait = [
+const dontWait = [
   ["", "don't wait", "to be", "good", ""],
-  [off, "#abcdef", "#671233", "#7766cc", off],
-  [off, "#de76fa", "#abcdef", "#e37861", off],
-  [35]
+  "#abcdef"
 ];
 const getting = [
-  ["there's nothing to get", "", "", "it's all in", "the getting"],
-  ["#889999", off, off, "#995599", "#995599"],
-  ["#995599", off, off, "#ccbbbb", "#ccbbbb"],
-  [-50]
+  ["there", "is", "nothing", "to", "get"],
+  "#995599"
 ];
 
-//choose image arrangement and colors based on the current time
-function getText(m, s) {
+//choose image arrangement and colors based on the current time (hour, minute)
+function getText(h, m) {
   var imageInfo;
-  if (m === 0) {
-    if (0 <= s && s <= 9) {
+  var mod4 = h % 4; //loop every 4 hours (could expand based on submissions)
+  if (mod4 == 0) {
+    if (0 <= m && m <= 40) {
       imageInfo = title;
-    } else if (10 <= s && s <= 12) {
-      imageInfo = blank;
-    } else if (13 <= s && s <= 22) {
-      imageInfo = triptych;
-    } else if (23 <= s && s <= 27) {
-      imageInfo = triptychPt1;
-    } else if (28 <= s && s <= 31) {
-      imageInfo = dontwait;
-    } else if (32 <= s && s <= 35) {
-      imageInfo = armSlut;
-    } else if (36 <= s && s <= 39) {
-      imageInfo = onlyExitRow;
-    } else if (40 <= s && s <= 42) {
-      imageInfo = blank;
-    } else if (43 <= s && s <= 52) {
-      imageInfo = getting;
-    } else if (53 <= s && s <= 54) {
-      imageInfo = blank;
-    } else if (55 <= s && s <= 59) {
-      imageInfo = silence;
+    } else if (41 <= m && m <= 59) {
+      imageInfo = nobodyFeels;
     }
-  } else if (m === 1) {
-    //TODO
-  } else if (m === 2) {
-    //TODO
+  } else if (mod4 === 1) {
+    if (0 <= m && m <= 22) {
+      imageInfo = everyDay;
+    } else if (23 <= m && m <= 33) {
+      imageInfo = title;
+    } else if (34 <= m && m <= 50) {
+      imageInfo = onlyExit;
+    } else if (51 <= m && m <= 59) {
+      imageInfo = dontWait;
+    }
+  } else if (mod4 === 2) {
+    if (0 <= m && m <= 22) {
+      imageInfo = title;
+    } else if (23 <= m && m <= 33) {
+      imageInfo = silence;
+    } else if (34 <= m && m <= 50) {
+      imageInfo = title;
+    } else if (51 <= m && m <= 59) {
+      imageInfo = getting;
+    }
+  } else if (mod4 === 3) {
+    if (0 <= m && m <= 18) {
+      imageInfo = onlyExit;
+    } else if (19 <= m && m <= 30) {
+      imageInfo = nobodyFeels;
+    } else if (31 <= m && m <= 59) {
+      imageInfo = everyDay;
+    }
+  } else {
+    imageInfo = title;
   };
   return imageInfo;
 }
