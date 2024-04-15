@@ -63,14 +63,14 @@ function screenSequence(n) {
   var sec = date.getSeconds();
 
   //update transparency each day
-  //TODO: update based on dates of exhibition
-         if (day == 21) {transparency = "11";}
-    else if (day == 22) {transparency = "33";}
-    else if (day == 23) {transparency = "55";}
-    else if (day == 24) {transparency = "77";}
-    else if (day == 25) {transparency = "99";}
-    else if (day == 26) {transparency = "bb";}
-    else if (day == 27) {transparency = "dd";}
+  //exhibition runs from April 15-21
+         if (day == 15) {transparency = "11";}
+    else if (day == 16) {transparency = "33";}
+    else if (day == 17) {transparency = "55";}
+    else if (day == 18) {transparency = "77";}
+    else if (day == 19) {transparency = "99";}
+    else if (day == 20) {transparency = "bb";}
+    else if (day == 21) {transparency = "dd";}
 
   //get text and colors intended to be displayed at the current time
   if (debugQ) {
