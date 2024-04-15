@@ -19,6 +19,7 @@ var backgroundColor = off;
 var textColor = "#fff";
 
 function setup() {
+  loadFont("Poppins-Medium.ttf");
   var myCanvas = createCanvas(windowWidth, windowHeight);
   myCanvas.parent("screen");
 }
@@ -34,9 +35,9 @@ function draw() {
       fill(backgroundColor);
       rect((i - 1) * windowWidth/5, windowHeight/5, windowWidth/5, windowHeight/5);
       fill(textColor);
-      textFont("Menlo")
+      textFont("Poppins")
       textAlign(CENTER);
-      textSize(windowWidth/20/5);
+      textSize(windowWidth/15/5);
       text(textString, (2 * i - 1) * windowWidth/10, 3 * windowHeight/10);
     };
   } else {
@@ -47,9 +48,9 @@ function draw() {
     fill(backgroundColor);
     rect(0, 0, windowWidth, windowHeight);
     fill(textColor);
-    textFont("Menlo")
+    textFont("Poppins")
     textAlign(CENTER);
-    textSize(windowWidth/20);
+    textSize(windowWidth/15);
     text(textString, windowWidth/2, windowHeight/2);
   };
 }
