@@ -34,6 +34,7 @@ p {
 
 input {
   margin: 2% 0;
+  border-radius: 0;
 }
 
 .buttons {
