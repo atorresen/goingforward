@@ -1,4 +1,5 @@
 const debugQ = false;
+const font = "Lato";
 
 var screenNum = 0;
 
@@ -19,7 +20,7 @@ var backgroundColor = off;
 var textColor = "#fff";
 
 function setup() {
-  loadFont("Poppins-Medium.ttf");
+  loadFont(font + ".ttf");
   var myCanvas = createCanvas(windowWidth, windowHeight);
   myCanvas.parent("screen");
 }
@@ -31,11 +32,12 @@ function draw() {
       screenSequence(i);
       frameRate(frameRateN);
       fill(off);
-      rect((i - 1) * windowWidth/5, windowHeight/5, windowWidth/5, windowHeight/5);
+      rect((i - 1) * windowWidth/5, windowHeight/5, windowWidth/5.1, windowHeight/5.1);
       fill(backgroundColor);
-      rect((i - 1) * windowWidth/5, windowHeight/5, windowWidth/5, windowHeight/5);
+      rect((i - 1) * windowWidth/5, windowHeight/5, windowWidth/5.1, windowHeight/5.1);
       fill(textColor);
-      textFont("Poppins")
+      textFont(font);
+      textStyle(BOLD);
       textAlign(CENTER);
       textSize(windowWidth/15/5);
       text(textString, (2 * i - 1) * windowWidth/10, 3 * windowHeight/10);
@@ -48,7 +50,8 @@ function draw() {
     fill(backgroundColor);
     rect(0, 0, windowWidth, windowHeight);
     fill(textColor);
-    textFont("Poppins")
+    textFont(font);
+    textStyle(BOLD);
     textAlign(CENTER);
     textSize(windowWidth/15);
     text(textString, windowWidth/2, windowHeight/2);
@@ -64,18 +67,19 @@ function screenSequence(n) {
   var sec = date.getSeconds();
 
   //update transparency each day
-  //exhibition runs from April 15-21
-         if (day == 15) {transparency = "11";}
-    else if (day == 16) {transparency = "33";}
-    else if (day == 17) {transparency = "55";}
-    else if (day == 18) {transparency = "77";}
-    else if (day == 19) {transparency = "99";}
-    else if (day == 20) {transparency = "bb";}
-    else if (day == 21) {transparency = "dd";}
+  //exhibition runs from April 18-25
+         if (day == 18) {transparency = "11";}
+    else if (day == 19) {transparency = "22";}
+    else if (day == 20) {transparency = "44";}
+    else if (day == 21) {transparency = "66";}
+    else if (day == 22) {transparency = "88";}
+    else if (day == 23) {transparency = "aa";}
+    else if (day == 24) {transparency = "cc";}
+    else if (day == 15) {transparency = "ee";}
 
   //get text and colors intended to be displayed at the current time
   if (debugQ) {
-    var imageInfo = getText(min % 24, sec);
+    var imageInfo = getText(sec % 24, sec);
   } else {
     var imageInfo = getText(hour, min);
   };
