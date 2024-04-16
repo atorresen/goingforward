@@ -1,34 +1,34 @@
 body {
   background: #222;
-  color: #ccc;
+  color: #ccd;
   font-family: "Major Mono Display", monospace;
   margin: 0;
 }
 
 h2 {
-  color: #888;
+  color: #889;
 }
 
 h3 {
   border: solid;
   border-width: 2px;
-  border-color: #ccc;
-  color: #ccc;
+  border-color: #ccd;
+  color: #ccd;
   font-size: 2.8rem;
 }
 
 a {
-  color: #555;
+  color: #556;
   text-decoration: none;
 }
 
 a:hover, h3:hover {
-  border-color: olive;
-  color: olive;
+  border-color: #5E92AD;
+  color: #5E92AD;
 }
 
 p {
-  color: #aaa;
+  color: #aab;
   margin: 100px auto;
 }
 
@@ -62,13 +62,13 @@ input {
   border: solid;
   border-width: 2px;
   font-size: 1.1rem;
-  border-color: olive;
-  color: olive;
+  border-color: #5E92AD;
+  color: #5E92AD;
   font-family: "Major Mono Display", monospace;
 }
 
 #submit:hover {
-  border-color: #ccc;
-  color: #ccc;
+  border-color: #ccd;
+  color: #ccd;
   cursor: pointer;
 }
