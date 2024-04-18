@@ -1,5 +1,5 @@
 const debugQ = false;
-const font = "Lato";
+const font = "Verdana";
 
 var screenNum = 0;
 
@@ -20,7 +20,6 @@ var backgroundColor = off;
 var textColor = "#fff";
 
 function setup() {
-  loadFont(font + ".ttf");
   var myCanvas = createCanvas(windowWidth, windowHeight);
   myCanvas.parent("screen");
 }
@@ -37,7 +36,7 @@ function draw() {
       rect((i - 1) * windowWidth/5, windowHeight/5, windowWidth/5.1, windowHeight/5.1);
       fill(textColor);
       textFont(font);
-      textStyle(BOLD);
+      // textStyle(BOLD);
       textAlign(CENTER);
       textSize(windowWidth/15/5);
       text(textString, (2 * i - 1) * windowWidth/10, 3 * windowHeight/10);
@@ -51,7 +50,7 @@ function draw() {
     rect(0, 0, windowWidth, windowHeight);
     fill(textColor);
     textFont(font);
-    textStyle(BOLD);
+    // textStyle(BOLD);
     textAlign(CENTER);
     textSize(windowWidth/15);
     text(textString, windowWidth/2, windowHeight/2);
